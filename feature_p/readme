@@ -1,0 +1,13 @@
+
+items feature: 
+0: item id, 1-6: career_level, 7-30: discipline, 31-54: industry, 55-57: country, 58-73: region,
+74: latitude(double), 75: longitude(double), 76: 标志latitude和longitude是否有意义的标志位, 77-81: employment,
+82-84:依次为title,jobrole,created_at,均未处理，不可直接做特征
+85: active_during_test
+
+
+users feature:
+0: user idf, 1-6: career_level, 7-30: discipline, 31-54: inductry, 55-57: country, 58-73: region,
+74-76: experience_n_entries_class, 77-83: experience_years_experience, 84: experience_years_in_current(int),
+85-87: edu_degree,
+88-89: 依次为jobroles, studyOfField,未处理不可直接做特征

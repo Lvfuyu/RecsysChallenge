@@ -2,3 +2,5 @@
 InitData/
 *.csv
 *.p
+*.txt
+basic_*
