@@ -17,24 +17,15 @@ Date:    2016/03/21 22:06:08
 File:    generate_test.py
 """
 import sys
-from itertools import islice  
-
-def get_items_all():
-    items_list = {}
-    with open(sys.argv[6], 'r') as items_file:
-        for line in islice(items_file, 1, None):
-            item_attr = line.rstrip('\r\n').split('\t')
-            user_id = item_attr[0]
-            active_during_test = int(item_attr[-1])
-            items_list[user_id] = active_during_test
-
-    return items_list
+sys.path.append('../utils')
+from utils import *
 
 test_users_file = open(sys.argv[1], 'r')
 impression_file = open(sys.argv[2], 'r')
-target_week = int(sys.argv[3])
-train_interact_file = open(sys.argv[4], 'r')
-local_test_file = open(sys.argv[5],'w')
+train_interact_file = open(sys.argv[3], 'r')
+local_test_file = open(sys.argv[4],'w')
+ItemsPred_list = get_items_all(sys.argv[5])
+target_week = int(sys.argv[6])
 Users = {}
 
 # store target users
@@ -66,10 +57,9 @@ for line in train_interact_file:
 
 train_interact_file.close()
 
-items_list = get_items_all()
 for user_id, item_list in Users.items():
     for item_id in item_list:
-        if items_list.has_key(item_id) and items_list[item_id] == 1:
+        if ItemsPred_list.has_key(item_id) and ItemsPred_list[item_id] == 1:
             local_test_file.write(user_id + '\t' + item_id + '\n')
 
 local_test_file.close()

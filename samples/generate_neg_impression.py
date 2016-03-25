@@ -18,6 +18,9 @@ import sys
 import time
 import datetime
 import random
+from itertools import islice
+sys.path.append('../utils')
+from utils import *
 
 def getUserItemSamp(file_name):
 
@@ -31,19 +34,26 @@ def getUserItemSamp(file_name):
                 uid2itemSet[uid] = item_set
             else:
                 uid2itemSet[uid] = set(item)
-    f.close()
+
     return uid2itemSet
 
 neg_cnt = 0
-label_time = int(sys.argv[4]) + 60
+
+impression_file = sys.argv[1]
+items_file = sys.argv[2]
+out_file = sys.argv[3]
+ItemsPred_list = get_items_all(sys.argv[4])
+label_time = int(sys.argv[5]) + 60
+
+
 label_date = time.gmtime(label_time)
 label_week = time.strftime("%W", label_date)
 label_week = int(label_week)
 print 'Week: ' + str(label_week)
 
-uid2itemSet = getUserItemSamp(sys.argv[2])
-f_out = open(sys.argv[3],'w')
-with open(sys.argv[1],'r') as f_in:
+uid2itemSet = getUserItemSamp(items_file)
+f_out = open(out_file,'w')
+with open(impression_file,'r') as f_in:
     for line in f_in:
         uid, year, week, item_list = line.rstrip().split('\t')
         item_list = item_list.rstrip().split(',')
@@ -52,7 +62,7 @@ with open(sys.argv[1],'r') as f_in:
                 itemSet = uid2itemSet[uid]
                 rand_list = random.sample(item_list, min(len(item_list),10))
                 for item in rand_list:
-                    if not item in itemSet:
+                    if not item in itemSet and item in ItemsPred_list:
                         neg_cnt += 1
                         f_out.write(uid + '\t' + item + '\t' + '0' + '\n')
                         #break # pick up one

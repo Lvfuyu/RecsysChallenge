@@ -55,15 +55,15 @@ def userSuccess(recommendedItems, relevantItem):
         return 0.0
 
 S = {}
-pred_result = open('pred.csv', 'r')
+pred_result = open('./local/pred.csv', 'r')
 for line_pred in pred_result:
     uid,recommendedItems = line_pred.rstrip('\r\n').split('\t')
     S[uid] = recommendedItems
 
-ground_truth = open('ground_truth.csv', 'r')
+ground_truth = open('./local/ground_truth.csv', 'r')
 line_truth = ground_truth.readline()
 point = 0.0
-while line_pred and line_truth:
+while line_truth:
     point += score(S, line_truth)
     line_truth = ground_truth.readline()
 

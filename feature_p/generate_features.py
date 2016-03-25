@@ -20,33 +20,42 @@ import sys
 import numpy as np
 import random
 
-user_feature_file = open(sys.argv[1],'r')
-item_feature_file = open(sys.argv[2],'r')
+# extract user feature
+def get_user_feature(user_feature_file):
+
+    user_feature = {}
+    file = open(user_feature_file,'r')
+
+    for line in file:
+        feature_list = line.rstrip('\r\n').split(' ')
+        user_id = feature_list[0]
+        feature_list = feature_list[1:88]
+        #print len(feature_list)
+        user_feature[user_id] = feature_list
+    file.close()
+
+    return user_feature
+
+# extract item feature
+def get_item_feature(item_feature_file):
+
+    item_feature = {}
+    file = open(item_feature_file,'r')
+    
+    for line in file:
+        feature_list = line.rstrip('\r\n').split(' ')
+        item_id = feature_list[0]
+        feature_list = feature_list[1:82]
+        item_feature[item_id] = feature_list
+    file.close()
+
+    return item_feature
+
+user_feature = get_user_feature(sys.argv[1])
+item_feature = get_item_feature(sys.argv[2])
 sample_file = open(sys.argv[3],'r')
 feature_file = open(sys.argv[4],'w')
 file_type = sys.argv[5]
-
-user_feature = {}
-item_feature = {}
-
-# extract user feature
-for line in user_feature_file:
-    feature_list = line.rstrip('\r\n').split(' ')
-    user_id = feature_list[0]
-    feature_list = feature_list[1:88]
-    #print len(feature_list)
-    user_feature[user_id] = feature_list
-
-user_feature_file.close()
-
-# extract item feature
-for line in item_feature_file:
-    feature_list = line.rstrip('\r\n').split(' ')
-    item_id = feature_list[0]
-    feature_list = feature_list[1:82]
-    item_feature[item_id] = feature_list
-
-item_feature_file.close()
 
 # concatenate feature
 target = 0
