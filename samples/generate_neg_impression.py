@@ -57,7 +57,7 @@ with open(impression_file,'r') as f_in:
     for line in f_in:
         uid, year, week, item_list = line.rstrip().split('\t')
         item_list = item_list.rstrip().split(',')
-        if year == '2015' and label_week == int(week):
+        if year == '2015' and label_week <= int(week) and label_week >= int(week)-3:
             if uid2itemSet.has_key(uid):
                 itemSet = uid2itemSet[uid]
                 rand_list = random.sample(item_list, min(len(item_list),10))
@@ -68,6 +68,7 @@ with open(impression_file,'r') as f_in:
                         #break # pick up one
             #else:
 print 'Neg Samples number: ' + str(neg_cnt)
+print 'Train User Number: ' + str(len(uid2itemSet))
 f_out.close()
 f_in.close()
 

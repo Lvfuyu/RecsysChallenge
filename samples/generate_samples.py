@@ -3,6 +3,7 @@
 # Copyright (c) 2016 CAS-NDST Lab, ICT, Inc. All Rights Reserved
 #
 ###########################################################################
+
 """
 Brief:
         input: interaction.csv and time range for sampling
@@ -13,6 +14,7 @@ Authors: lvfuyu(@software.ict.ac.cn)
 Date:    2016/03/14 22:50:04
 File:    generate_samples.py
 """
+
 import sys
 from itertools import islice
 sys.path.append('../utils')

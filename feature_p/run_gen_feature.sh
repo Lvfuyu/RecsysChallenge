@@ -1,7 +1,7 @@
 #isOnline=1
 
 . ../config.sh
-cur_dir=../
+cur_dir=..
 
 if [ "$isOnline" == "0" ] ; then
 # train features
