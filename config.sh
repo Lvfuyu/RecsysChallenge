@@ -1,5 +1,5 @@
 # define mode
-isOnline=0
+isOnline=1
 
 # define all potential directory path
 root=.

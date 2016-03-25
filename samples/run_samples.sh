@@ -39,7 +39,7 @@ else
 python generate_samples.py ${cur_dir}/${online_train_data}/interactions.csv \
 						   ./online/samples.csv \
 						   ${cur_dir}/${online_train_data}/items.csv \
-						   1446422400 7
+						   1446422400 28
 # negative sample
 python generate_neg_impression.py ${cur_dir}/${online_train_data}/impressions.csv \
 								  ./online/samples.csv \
