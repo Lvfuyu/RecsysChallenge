@@ -1,5 +1,5 @@
 
-# start the entire procedure
+# start the entire train procedure
 cd ./samples
 sh run_samples.sh
 cd -
