@@ -1,0 +1,10 @@
+*.tgz
+*.csv
+*.p
+*.txt
+basic_items_features
+basic_users_features
+.DS_Store
+xgboost
+*.model
+*.log

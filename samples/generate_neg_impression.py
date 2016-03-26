@@ -51,7 +51,7 @@ print 'The last training Week: ' + str(label_week)
 uid2itemSet = getUserItemSamp(items_file)
 f_out = open(out_file,'w')
 with open(impression_file,'r') as f_in:
-    for line in f_in:
+    for line in islice(f_in, 1, None):
         uid, year, week, item_list = line.rstrip().split('\t')
         item_list = item_list.rstrip().split(',')
         if year == '2015' and label_week <= int(week) and label_week >= int(week)-3:

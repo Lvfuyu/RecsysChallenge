@@ -25,6 +25,8 @@ def get_target_users(file, Users):
     test_users_file = open(file, 'r')
     for line in test_users_file:
         user = line.rstrip('\r\n')
+        if user == 'user_id':
+            continue
         Users[user] = set()
 
     test_users_file.close()
@@ -34,7 +36,7 @@ def get_target_users(file, Users):
 def update_users_impression(file, Users, target_week):
     # scan impressions, pick up the items recommended to user_id in the target week
     impression_file = open(file, 'r')
-    for line in impression_file:
+    for line in islice(impression_file, 1, None):
         user_id, _, week, items = line.rstrip('\r\n').split('\t')
         if week >= target_week - 3 and week <= target_week:
             continue
