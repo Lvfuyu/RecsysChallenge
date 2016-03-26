@@ -1,7 +1,8 @@
 # define mode
+# 1 for online; 0 for offline validation
 isOnline=1
 
-# define all potential directory path
+# define all potential directory
 root=.
 
 data=${root}/data
