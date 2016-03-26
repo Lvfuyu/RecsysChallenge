@@ -43,13 +43,10 @@ impression_file = sys.argv[1]
 items_file = sys.argv[2]
 out_file = sys.argv[3]
 ItemsPred_list = get_items_all(sys.argv[4])
-label_time = int(sys.argv[5]) + 60
+label_time = int(sys.argv[5])
 
-
-label_date = time.gmtime(label_time)
-label_week = time.strftime("%W", label_date)
-label_week = int(label_week)
-print 'Week: ' + str(label_week)
+label_week = get_week_year(label_time)
+print 'The last training Week: ' + str(label_week)
 
 uid2itemSet = getUserItemSamp(items_file)
 f_out = open(out_file,'w')
@@ -67,7 +64,7 @@ with open(impression_file,'r') as f_in:
                         f_out.write(uid + '\t' + item + '\t' + '0' + '\n')
                         #break # pick up one
             #else:
-print 'Neg Samples number: ' + str(neg_cnt)
+print 'Negative Sample number: ' + str(neg_cnt)
 print 'Train User Number: ' + str(len(uid2itemSet))
 f_out.close()
 f_in.close()
