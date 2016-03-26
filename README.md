@@ -3,16 +3,17 @@
 
 ##Code structure
 
-* ./data *store online and offline train & test data*
-* ./smaples *create train samples and test samples*
-* ./feature_p *extract features according to sample files*
-* ./model *train and test*
-* ./submit *store submit file and offline evaluate function*
-* predata.sh *线下数据划分脚本*
-* config.sh *指定offline和online 定义路径*
-* run_all.sh *训练和测试*
+* ./data	*store online and offline train & test data*
+* ./smaples	*create train samples and test samples*
+* ./feature_p	*extract features according to sample files*
+* ./model	*train and test*
+* ./submit	*store submit file and offline evaluate function*
+* predata.sh	*线下数据划分脚本*
+* config.sh	*指定offline和online 定义路径*
+* run_all.sh	*训练和测试*
 * 各个目录下的online和local文件夹分别对应线上线下的处理数据
-* ./InitDat useless
+* *暂时的只有题目给出的user和item属性特征，处理代码在毅博那*
+* ./InitDat	useless
 
 ##初始化Project
 
@@ -26,7 +27,7 @@
 
 * ./config.sh指定运行模式0（offline）和1（online）
 * sh run_all.sh
-* 启动脚本先后进去./samples, ./features_p, ./model目录执行相应目录下脚本
+* 启动脚本会先后进入./samples, ./features_p, ./model目录执行相应目录下脚本
 
 ##数据说明
 
