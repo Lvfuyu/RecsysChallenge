@@ -1,6 +1,7 @@
 
 #id:0, title:1, career_level:2, discipline_id:3, industry_id:4, country:5, region:6, latitude:7, longitude:8, employment:9, tags:10, created_at:11, active_during_test:12
 
+import sys
 def discretize(length, id):
 	li = [0]*length 
 	if id != '0' and id != 'NULL' and id != "":
@@ -20,9 +21,12 @@ def tab(s):
 
 if __name__=="__main__":
 
-	fout = open("../data/basic_items_features", "w")
+        print sys.args
+        inputPath = sys.args[1] 
+        outputPath = sys.args[2] 
+	fout = open(outputPath, "w")
 
-	with open("../data/items.csv", "r") as fin:
+	with open(outputPath, "r") as fin:
 		line = fin.readline()
 		for line in fin:
 			items = line.strip().split("\t")	
