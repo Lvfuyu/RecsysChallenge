@@ -12,8 +12,8 @@ def discretize(length, id):
 		s += " " + str(i)
 	return s.strip()
 
-inputPath = sys.args[1]
-ouputPath = sys.args[2]
+inputPath = sys.argv[1]
+outputPath = sys.argv[2]
 
 fout = open(outputPath, "w")
 with open(inputPath, "r") as fin:
