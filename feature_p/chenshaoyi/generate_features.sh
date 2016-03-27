@@ -1,3 +1,7 @@
 . ../config.sh
 root_dir=..
 
+# data file 
+# user.csv ${root_dir}/${online_train_data}/users.csv
+# items.csv ${root_dir}/${online_train_data}/items.csv
+# out_feature: ../
