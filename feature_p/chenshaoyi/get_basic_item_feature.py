@@ -78,7 +78,7 @@ if __name__=="__main__":
 			features += " " + discretize(5, items[9])
 
 
-			#title jobrole createdat
+			#title tag createdat
 			features += " " + tab(items[1]) + " " + tab(items[10]) + " " + tab(items[11])
 
 			#active_during_test

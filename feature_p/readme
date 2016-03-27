@@ -2,7 +2,7 @@
 items feature: 
 0: item id, 1-6: career_level, 7-30: discipline, 31-54: industry, 55-57: country, 58-73: region,
 74: latitude(double), 75: longitude(double), 76: 标志latitude和longitude是否有意义的标志位, 77-81: employment,
-82-84:依次为title,jobrole,created_at,均未处理，不可直接做特征
+82-84:依次为title,tags,created_at,均未处理，不可直接做特征
 85: active_during_test
 
 
