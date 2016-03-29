@@ -42,6 +42,7 @@ mkdir -p ./submit/local
 fi
 
 cd ./data
+#sed -i '' '1d' interactions.csv # mac shell command if linux maybe sed -i '1d'
 sed -i '1d' interactions.csv # mac shell command if linux maybe sed -i '1d'
 mv impressions.csv interactions.csv items.csv users.csv ./train/online
 mv target_users.csv ../submit/online

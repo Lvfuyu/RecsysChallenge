@@ -12,6 +12,13 @@ def discretize(length, id):
 		s += " " + str(i)
 	return s.strip()
 
+def tab(s):
+	s = s.strip()
+	if s==" " or s=="":
+		return "NULL"
+
+	return s
+
 inputPath = sys.argv[1]
 outputPath = sys.argv[2]
 
@@ -53,13 +60,13 @@ with open(inputPath, "r") as fin:
 		features += " " + discretize(7, items[8])
 
 		#experience_years_in_current
-		features += " " + items[9] 
+		features += " " + tab(items[9]) 
 
 		#edu_degree
 		features += " " + discretize(3, items[10])
 
 		#job roles and field of studies
-		features += " " + items[1] + " "  + items[-1]
+		features += " " + tab(items[1]) + " "  + tab(items[-1])
 		
 		fout.write(features+"\n")
 
