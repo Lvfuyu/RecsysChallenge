@@ -13,6 +13,8 @@ users feature:
 88-89: 依次为jobroles, studyOfField,未处理不可直接做特征
 
 
-由get_word_intersaction.py产生的特征文件，依次为
-userid, itemid, 特征1-特征12， 分割符为\t
+
+get_word_intersaction.py根据user-item对产生user的jobroles和item的title, user的jobrole和item的tags, user的studyField和
+item的title， user的studyField和item的tags的交集的大小以及jacard距离等特征， 并拼接到user/item的basic feature中
+输出文件直接为最终的xgboost输入文件
 get_word_intersaction.py的输入参数依次为user_basic_feature, item_basic_feature, user_item对的文件路径, 输出文件路径

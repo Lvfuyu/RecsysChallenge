@@ -7,4 +7,5 @@ root_dir=../..
 # out_feature: ../
 
 
-python get_word_intersaction.py ../basic_users_features ../basic_items_features ${root_dir}/${local_samples}/local_samples.csv word_intesect.csv 
+python get_word_intersaction.py ../basic_users_features ../basic_items_features ${root_dir}/${local_samples}/local_samples.csv ../local/local_train.p 
+python get_word_intersaction.py ../basic_users_features ../basic_items_features ${root_dir}/${local_samples}/local_test_samples.csv ../local/local_test.p 
