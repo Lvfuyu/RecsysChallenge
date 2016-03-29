@@ -11,3 +11,8 @@ users feature:
 74-76: experience_n_entries_class, 77-83: experience_years_experience, 84: experience_years_in_current(int),
 85-87: edu_degree,
 88-89: 依次为jobroles, studyOfField,未处理不可直接做特征
+
+
+由get_word_intersaction.py产生的特征文件，依次为
+userid, itemid, 特征1-特征12， 分割符为\t
+get_word_intersaction.py的输入参数依次为user_basic_feature, item_basic_feature, user_item对的文件路径, 输出文件路径
