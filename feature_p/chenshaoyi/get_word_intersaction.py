@@ -51,7 +51,7 @@ def load_items_titles_and_tags(file):
 	return itemTitle, itemStudyField, itemBasicFeature
 
 
-def load_user_item_pairs(file, isTrain):
+def load_user_item_pairs(file):
 	
 	pairs = []
 	with open(file, "r") as fin:
