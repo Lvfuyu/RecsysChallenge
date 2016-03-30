@@ -54,7 +54,8 @@ with open(impression_file,'r') as f_in:
     for line in islice(f_in, 1, None):
         uid, year, week, item_list = line.rstrip().split('\t')
         item_list = item_list.rstrip().split(',')
-        if year == '2015' and (int(week) <= label_week) and (int(week) >= label_week-1):
+        week = int(week)
+        if (week <= label_week) and (week >= label_week-3):
             if uid2itemSet.has_key(uid):
                 itemSet = uid2itemSet[uid]
                 rand_list = random.sample(item_list, min(len(item_list),10))

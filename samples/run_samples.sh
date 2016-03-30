@@ -61,11 +61,11 @@ echo 'Create test samples...'
 # generate test file
 python generate_test.py ${root_dir}/${online_submit}/target_users.csv \
 						${root_dir}/${online_train_data}/impressions.csv \
-						./online/online_samples.csv \
-						./online/online_test_samples.csv \
+						${root_dir}/${online_train_data}/interactions.csv \
+                        ./online/online_test_samples.csv \
 						${root_dir}/${online_train_data}/items.csv \
 						46
-
+#./online/online_samples.csv \
 echo 'Total Test Sample Number:' $(wc -l ./online/online_test_samples.csv)
 
 fi

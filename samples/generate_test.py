@@ -23,10 +23,10 @@ from utils import *
 def get_target_users(file, Users):
     # store target users
     test_users_file = open(file, 'r')
-    for line in test_users_file:
+    for line in islice(test_users_file, 1, None):
         user = line.rstrip('\r\n')
-        if user == 'user_id':
-            continue
+        #if user == 'user_id':
+        #    continue
         Users[user] = set()
 
     test_users_file.close()
@@ -38,14 +38,16 @@ def update_users_impression(file, Users, target_week):
     impression_file = open(file, 'r')
     for line in islice(impression_file, 1, None):
         user_id, _, week, items = line.rstrip('\r\n').split('\t')
-        if (int(week) < target_week - 3) or (int(week) > target_week):
-            continue
-        items = items.split(',')
         if user_id in Users:
-            ori_items = Users[user_id]
-            items = set(items)
-            items = ori_items | items;
-            Users[user_id] = items
+            items = items.split(',')
+            week = int(week)
+            if week <= target_week - 3:
+                Users[user_id] = set(items); # update 
+            elif week <= target_week:            
+                ori_items = Users[user_id]
+                items = set(items)
+                items = ori_items | items;
+                Users[user_id] = items
 
     impression_file.close()
     return Users
@@ -54,8 +56,8 @@ def update_users_interact(file, Users):
 
     train_interact_file = open(file, 'r')
     for line in train_interact_file:
-        user_id, item_id, target = line.rstrip('\r\n').split('\t')
-        if int(target) == 0:
+        user_id, item_id, act_tye, _ = line.rstrip('\r\n').split('\t')
+        if int(act_tye) == 4:
             continue
         if user_id in Users:
             rec_item = Users[user_id]
@@ -73,11 +75,15 @@ Users = update_users_interact(sys.argv[3], Users)
 local_test_file = open(sys.argv[4],'w')
 ItemsPred_list = get_items_all(sys.argv[5])
 
+active_user = 0
 for user_id, item_list in Users.items():
+    if len(item_list) > 0:
+        active_user += 1
     for item_id in item_list:
         if ItemsPred_list.has_key(item_id) and ((int(sys.argv[6]) == 45) or (ItemsPred_list[item_id] == 1)):
             local_test_file.write(user_id + '\t' + item_id + '\t' + '0'  + '\n')
 
 local_test_file.close()
+print 'Target Users Included: ' + str(active_user)
 
 # vim: set expandtab ts=4 sw=4 sts=4 tw=100:
