@@ -18,7 +18,7 @@ while 1:
 	line2 = pred_file.readline()
 	if not line1 and not line2:
 		break
-	user_id, item_id = line1.rstrip('\r\n').split('\t')
+	user_id, item_id, _ = line1.rstrip('\r\n').split('\t')
 	prob = line2.rstrip('\r\n')
 	prob = float(prob)
 	if UserRecomList.has_key(user_id):

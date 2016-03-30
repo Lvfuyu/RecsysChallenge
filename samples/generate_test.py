@@ -38,7 +38,7 @@ def update_users_impression(file, Users, target_week):
     impression_file = open(file, 'r')
     for line in islice(impression_file, 1, None):
         user_id, _, week, items = line.rstrip('\r\n').split('\t')
-        if week >= target_week - 3 and week <= target_week:
+        if (week >= target_week - 3) and (week <= target_week):
             continue
         items = items.split(',')
         if user_id in Users:
@@ -72,8 +72,8 @@ ItemsPred_list = get_items_all(sys.argv[5])
 
 for user_id, item_list in Users.items():
     for item_id in item_list:
-        if ItemsPred_list.has_key(item_id) and (int(sys.argv[6]) == 45 or ItemsPred_list[item_id]) == 1:
-            local_test_file.write(user_id + '\t' + item_id + '\n')
+        if ItemsPred_list.has_key(item_id) and ((int(sys.argv[6]) == 45) or (ItemsPred_list[item_id] == 1)):
+            local_test_file.write(user_id + '\t' + item_id + '\t' + '0'  + '\n')
 
 local_test_file.close()
 
