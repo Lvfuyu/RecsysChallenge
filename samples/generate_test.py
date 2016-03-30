@@ -38,18 +38,21 @@ def update_users_impression(file, Users, target_week):
     impression_file = open(file, 'r')
     for line in islice(impression_file, 1, None):
         user_id, _, week, items = line.rstrip('\r\n').split('\t')
-        if (week < target_week - 3) or (week > target_week):
+        if (int(week) < target_week - 3) or (int(week) > target_week):
             continue
         items = items.split(',')
         if user_id in Users:
-            Users[user_id] = set(items)
+            ori_items = Users[user_id]
+            items = set(items)
+            items = ori_items | items;
+            Users[user_id] = items
 
     impression_file.close()
     return Users
 
 def update_users_interact(file, Users):
-    
-    train_interact_file = open(file, 'r')    
+
+    train_interact_file = open(file, 'r')
     for line in train_interact_file:
         user_id, item_id, target = line.rstrip('\r\n').split('\t')
         if int(target) == 0:
