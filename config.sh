@@ -1,6 +1,6 @@
 # define mode
 # 1 for online; 0 for offline validation
-isOnline=0
+isOnline=1
 
 # define all potential directory
 root=.
