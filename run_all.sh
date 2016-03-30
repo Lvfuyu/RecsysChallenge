@@ -6,11 +6,11 @@ echo 'Sampling...'
 sh run_samples.sh
 echo 'Sample End'
 cd -
-
+#
 cd ./feature_p
 echo 'Generating Feature File...'
 # 根据样本提取特征，生成特征文件
-sh run_gen_feature.sh
+sh run_merge_feature.sh
 echo 'Generate Feature End'
 cd -
 

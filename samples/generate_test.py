@@ -72,7 +72,7 @@ ItemsPred_list = get_items_all(sys.argv[5])
 
 for user_id, item_list in Users.items():
     for item_id in item_list:
-        if ItemsPred_list.has_key(item_id) and ItemsPred_list[item_id] == 1:
+        if ItemsPred_list.has_key(item_id) and (int(sys.argv[6]) == 45 or ItemsPred_list[item_id]) == 1:
             local_test_file.write(user_id + '\t' + item_id + '\n')
 
 local_test_file.close()
