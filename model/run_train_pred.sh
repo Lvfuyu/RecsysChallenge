@@ -30,7 +30,7 @@ python train_xgboost.py ${root_dir}/${online_feature}/online_train_features.p \
 						./online/pred.txt
 
 # generate submit result
-python gen_submit.py ${root_dir}/${online_samples}/test_samples.csv \
+python gen_submit.py ${root_dir}/${online_samples}/online_test_samples.csv \
 					 ./online/pred.txt \
 					 ${root_dir}/${online_submit}/pred.csv
 echo 'Predicted Users Number: '$(wc -l ${root_dir}/${online_submit}/pred.csv)
