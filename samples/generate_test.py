@@ -38,7 +38,7 @@ def update_users_impression(file, Users, target_week):
     impression_file = open(file, 'r')
     for line in islice(impression_file, 1, None):
         user_id, _, week, items = line.rstrip('\r\n').split('\t')
-        if (week >= target_week - 3) and (week <= target_week):
+        if (week < target_week - 3) or (week > target_week):
             continue
         items = items.split(',')
         if user_id in Users:
