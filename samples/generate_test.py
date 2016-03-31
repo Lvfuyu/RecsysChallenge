@@ -35,19 +35,23 @@ def get_target_users(file, Users):
 
 def update_users_impression(file, Users, target_week):
     # scan impressions, pick up the items recommended to user_id in the target week
+    UserLatestWeek = {}
     impression_file = open(file, 'r')
     for line in islice(impression_file, 1, None):
         user_id, _, week, items = line.rstrip('\r\n').split('\t')
+        week = int(week)
         if user_id in Users:
             items = items.split(',')
-            week = int(week)
-            if week <= target_week - 3:
-                Users[user_id] = set(items); # update 
-            elif week <= target_week:            
+            if week < target_week - 3:
+                if UserLatestWeek.has_key(user_id) and UserLatestWeek[user_id] > week:
+                    continue
+                Users[user_id] = set(items); # update
+            elif week <= target_week:
                 ori_items = Users[user_id]
                 items = set(items)
                 items = ori_items | items;
                 Users[user_id] = items
+            UserLatestWeek[user_id] = week
 
     impression_file.close()
     return Users
