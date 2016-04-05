@@ -40,7 +40,8 @@ param = {
 		 'seed':2016
 		 }
 
-watchlist  = [(dtrain,'train'), (dtest, 'test')]
+#watchlist  = [(dtrain,'train'), (dtest, 'test')]
+watchlist = [(dtrain,'train')]
 bst = xgb.train(param, dtrain, num_round, watchlist)
 bst.save_model('train.model')
 

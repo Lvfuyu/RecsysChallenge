@@ -108,7 +108,7 @@ if __name__ == "__main__":
 	with open(output_file, "w") as fout:
 		line = ""
 		print len(userItemPairs)
-		counter = 0
+		counter = 1
 		for pair in userItemPairs:
 			counter += 1
 			line = userBasicFeature[pair[0]] + " " + itemBasicFeature[pair[1]]
