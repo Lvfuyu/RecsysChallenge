@@ -6,8 +6,9 @@ if [ "$isOnline" == "0" ] ; then
 
 echo 'Training...'
 
-./liblinear/train -s 0 ${root_dir}/${local_feature}/local_train_features.p lr.model
-./liblinear/predict -b 1 ${root_dir}/${local_feature}/local_test_features.p lr.model ./local/pred.txt
+./liblinear/train -s 6 -w1 5 ${root_dir}/${local_feature}/local_train_features.p ./liblinear/lr.model
+./liblinear/predict -b 1 ${root_dir}/${local_feature}/local_test_features.p ./liblinear/lr.model ./liblinear/lr_pred.txt
+python ./liblinear/conver2pred.py ./liblinear/lr_pred.txt ./local/pred.txt
 
 echo 'Evaluating...'
 # generate submit result

@@ -81,7 +81,7 @@ def get_xgboost_input(line):
 	result = ""
 	for i, item in enumerate(items):
 		if item != '0' and item != '0.0':
-			result += " " + str(i) + ":"
+			result += " " + str(i+1) + ":"
 			if item == 'NULL':
 				result += '-1'
 			else:
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 	with open(output_file, "w") as fout:
 		line = ""
 		print len(userItemPairs)
-		counter = 1
+		counter = 0
 		for pair in userItemPairs:
 			counter += 1
 			line = userBasicFeature[pair[0]] + " " + itemBasicFeature[pair[1]]

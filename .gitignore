@@ -10,4 +10,5 @@ basic_users_features
 xgboost
 *.model
 *.log
+*.swp
 zhounan/
