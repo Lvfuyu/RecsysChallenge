@@ -4,7 +4,7 @@ root_dir=..
 
 if [ "$isOnline" == "0" ] ; then
 
-echo 'Training...'
+echo 'Offline Training...'
 
 ./liblinear/train -s 0 -c 0.6 -w1 5 ${root_dir}/${local_feature}/local_train_features.p ./liblinear/lr.model
 ./liblinear/predict -b 1 ${root_dir}/${local_feature}/local_test_features.p ./liblinear/lr.model ./liblinear/lr_pred.txt
@@ -23,7 +23,7 @@ python score.py
 
 else
 
-echo 'Testing...'
+echo 'Online Training...'
 
 ./liblinear/train -s 0 -c 0.6 -w1 5 ${root_dir}/${online_feature}/online_train_features.p ./liblinear/lr_online.model
 ./liblinear/predict -b 1 ${root_dir}/${online_feature}/online_test_features.p ./liblinear/lr_online.model ./liblinear/lr_pred.txt

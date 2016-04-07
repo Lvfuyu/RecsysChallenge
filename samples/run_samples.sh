@@ -40,23 +40,23 @@ else
 
 echo 'Create samples from interactions...'
 # positive sample
-python generate_samples.py ${root_dir}/${online_train_data}/interactions.csv \
-						   ./online/online_samples.csv \
-						   ${root_dir}/${online_train_data}/items.csv \
-						   1447027199 28
-
-echo 'Create samples from impressions...'
-# negative sample
-python generate_neg_impression.py ${root_dir}/${online_train_data}/impressions.csv \
-								  ./online/online_samples.csv \
-								  ./online/online_neg_samples.csv \
-								  ${root_dir}/${online_train_data}/items.csv \
-								  1447027199
-
-# concatenate two sample files
-cat ./online/online_neg_samples.csv >> ./online/online_samples.csv
-echo 'Total Train Sample Number:' $(wc -l ./online/online_samples.csv)
-
+#python generate_samples.py ${root_dir}/${online_train_data}/interactions.csv \
+#						   ./online/online_samples.csv \
+#						   ${root_dir}/${online_train_data}/items.csv \
+#						   1447027199 28
+#
+#echo 'Create samples from impressions...'
+## negative sample
+#python generate_neg_impression.py ${root_dir}/${online_train_data}/impressions.csv \
+#								  ./online/online_samples.csv \
+#								  ./online/online_neg_samples.csv \
+#								  ${root_dir}/${online_train_data}/items.csv \
+#								  1447027199
+#
+## concatenate two sample files
+#cat ./online/online_neg_samples.csv >> ./online/online_samples.csv
+#echo 'Total Train Sample Number:' $(wc -l ./online/online_samples.csv)
+#
 echo 'Create test samples...'
 # generate test file
 python generate_test.py ${root_dir}/${online_submit}/target_users.csv \

@@ -83,7 +83,7 @@ def update_missed_users(file, Users):
     for missed_user, sim_users in missedUsers.items():
         sim_users_items = Users[missed_user]
         for sim_u in sim_users:
-            if sim_u in Users:
+            if sim_u in Users: # remain improving
                 sim_users_items = sim_users_items | Users[sim_u]
         Users[missed_user] = sim_users_items
 
