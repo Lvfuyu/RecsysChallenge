@@ -71,10 +71,29 @@ def update_users_interact(file, Users):
     train_interact_file.close()
     return Users
 
+def update_missed_users(file, Users):
+    file = 'online/similar_user.csv';
+    missedUsers = {}
+    with open(file, 'r') as f:
+        for line in f:
+            user, sim_users = line.rstrip('\r\n').split(':')
+            sim_users = sim_users.split(',')
+            missedUsers[user] = sim_users
+    
+    for missed_user, sim_users in missedUsers.items():
+        sim_users_items = Users[missed_user]
+        for sim_u in sim_users:
+            if sim_u in Users:
+                sim_users_items = sim_users_items | Users[sim_u]
+        Users[missed_user] = sim_users_items
+
+    return Users
+
 Users = {}
 Users = get_target_users(sys.argv[1], Users)
 Users = update_users_impression(sys.argv[2], Users, int(sys.argv[6]))
 Users = update_users_interact(sys.argv[3], Users)
+Users = update_missed_users('', Users)
 
 local_test_file = open(sys.argv[4],'w')
 ItemsPred_list = get_items_all(sys.argv[5])

@@ -48,7 +48,7 @@ def load_target_users(file):
 
 def load_unknown_users(file, target_users, knowned_users, feature2users, user2feature):
 	
-	fout = open('../similar_user.csv', 'w')
+	fout = open('../../sample/similar_user.csv', 'w')
 	with open(file, "r") as fin:
 		fin.readline()
 		for line in fin:
