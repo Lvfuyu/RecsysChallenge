@@ -17,9 +17,22 @@ Date:    2016/03/21 22:06:08
 File:    generate_test.py
 """
 
+import random
 import sys
 sys.path.append('../utils')
 from utils import *
+
+def get_sim_items(file, ItemsSim):
+
+    file = 'local/item_expand.csv'
+    with open(file, 'r') as f:
+        for line in f:
+            item, sim_items = line.rstrip('\r\n').split(':')
+            sim_items = sim_items.split(',')
+            sim_items = random.sample(sim_items, min(len(sim_items, 30)))
+            ItemsSim[item] = set(sim_items)
+
+    return ItemsSim
 
 def get_missed_users(file, MissedUsers):
 
@@ -76,7 +89,7 @@ def update_users_impression(file, Users, target_week):
     impression_file.close()
     return Users
 
-def update_users_interact(file, Users):
+def update_users_interact(file, Users, ItemsSim):
 
     train_interact_file = open(file, 'r')
     for line in train_interact_file:
@@ -86,6 +99,9 @@ def update_users_interact(file, Users):
         if user_id in Users:
             rec_item = Users[user_id]
             rec_item.add(item_id)
+            if item_id in ItemsSim:
+                rec_item = rec_item | ItemsSim[item_id]
+                
             Users[user_id] = rec_item
 
     train_interact_file.close()
@@ -105,10 +121,12 @@ def update_missed_users(Users, Users_supp, MissedUsers):
 Users = {}
 Users_supp = {}
 MissedUsers = {}
+ItemsSim = {}
 
+ItemsSim = get_sim_items('', ItemsSim)
 Users = get_target_users(sys.argv[1], Users)
 Users = update_users_impression(sys.argv[2], Users, int(sys.argv[6]))
-Users = update_users_interact(sys.argv[3], Users)
+Users = update_users_interact(sys.argv[3], Users, ItemsSim)
 local_test_file = open(sys.argv[4],'w')
 ItemsPred_list = get_items_all(sys.argv[5])
 
