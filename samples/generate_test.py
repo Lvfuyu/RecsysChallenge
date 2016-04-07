@@ -16,9 +16,29 @@ Authors: lvfuyu(@software.ict.ac.cn)
 Date:    2016/03/21 22:06:08
 File:    generate_test.py
 """
+
 import sys
 sys.path.append('../utils')
 from utils import *
+
+def get_missed_users(file, MissedUsers):
+
+    file = 'online/similar_user.csv'
+    with open(file, 'r') as f:
+        for line in f:
+            user, sim_users = line.rstrip('\r\n').split(':')
+            sim_users = sim_users.split(',')
+            MissedUsers[user] = sim_users
+
+    return MissedUsers
+
+def get_supply_users(Users_supp, MissedUsers):
+
+    for missed_user, sim_users in MissedUsers.items():
+        for sim_u in sim_users:
+            Users_supp[sim_u] = set()
+
+    return Users_supp
 
 def get_target_users(file, Users):
     # store target users
@@ -71,32 +91,33 @@ def update_users_interact(file, Users):
     train_interact_file.close()
     return Users
 
-def update_missed_users(file, Users):
-    file = 'online/similar_user.csv';
-    missedUsers = {}
-    with open(file, 'r') as f:
-        for line in f:
-            user, sim_users = line.rstrip('\r\n').split(':')
-            sim_users = sim_users.split(',')
-            missedUsers[user] = sim_users
+def update_missed_users(Users, Users_supp, MissedUsers):
     
-    for missed_user, sim_users in missedUsers.items():
+    for missed_user, sim_users in MissedUsers.items():
         sim_users_items = Users[missed_user]
         for sim_u in sim_users:
-            if sim_u in Users: # remain improving
-                sim_users_items = sim_users_items | Users[sim_u]
+            if sim_u in Users_supp:
+                sim_users_items = sim_users_items | Users_supp[sim_u]
         Users[missed_user] = sim_users_items
 
     return Users
 
 Users = {}
+Users_supp = {}
+MissedUsers = {}
+
 Users = get_target_users(sys.argv[1], Users)
 Users = update_users_impression(sys.argv[2], Users, int(sys.argv[6]))
 Users = update_users_interact(sys.argv[3], Users)
-Users = update_missed_users('', Users)
-
 local_test_file = open(sys.argv[4],'w')
 ItemsPred_list = get_items_all(sys.argv[5])
+
+MissedUsers = get_missed_users('', MissedUsers)
+Users_supp = update_users_impression(sys.argv[2], Users_supp, int(sys.argv[6]))
+Users_supp = update_users_interact(sys.argv[3], Users_supp)
+
+Users_supp = get_supply_users(Users_supp, MissedUsers)
+Users = update_missed_users(Users, Users_supp, MissedUsers)
 
 active_user = 0
 for user_id, item_list in Users.items():
