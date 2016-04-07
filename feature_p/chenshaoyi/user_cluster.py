@@ -48,7 +48,7 @@ def load_target_users(file):
 
 def load_unknown_users(file, target_users, knowned_users, feature2users, user2feature):
 	
-	fout = open('similar_user', 'w')
+	fout = open('../similar_user.csv', 'w')
 	with open(file, "r") as fin:
 		fin.readline()
 		for line in fin:
@@ -125,10 +125,10 @@ def load_user(file, knowned_users):
 
 if __name__ == '__main__':
 
-	user_file = "../../data/users.csv"
-	impr_file = "../../data/impressions.csv"
-	inter_file = "../../data/interactions.csv"
-	target_file = "../../data/target_users.csv"
+	user_file = "../../data/train/online/users.csv"
+	impr_file = "../../data/train/online/impressions.csv"
+	inter_file = "../../data/train/online/interactions.csv"
+	target_file = "../../data/train/online/target_users.csv"
 
 	target_users = load_target_users(target_file)
 	knowned_users = get_has_impr_or_inter_users(impr_file, inter_file)
