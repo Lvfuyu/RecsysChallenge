@@ -4,7 +4,7 @@ root_dir=..
 
 if [ "$isOnline" == "0" ] ; then
 
-echo 'Training...'
+echo 'Online Training...'
 # train model
 python train_xgboost.py ${root_dir}/${local_feature}/local_train_features.p \
 						${root_dir}/${local_feature}/local_test_features.p \
@@ -23,7 +23,7 @@ python score.py
 
 else
 
-echo 'Training...'
+echo 'Online Training...'
 # train model
 python train_xgboost.py ${root_dir}/${online_feature}/online_train_features.p \
 						${root_dir}/${online_feature}/online_test_features.p \

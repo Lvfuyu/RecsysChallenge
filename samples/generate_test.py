@@ -113,10 +113,10 @@ local_test_file = open(sys.argv[4],'w')
 ItemsPred_list = get_items_all(sys.argv[5])
 
 MissedUsers = get_missed_users('', MissedUsers)
+Users_supp = get_supply_users(Users_supp, MissedUsers)
 Users_supp = update_users_impression(sys.argv[2], Users_supp, int(sys.argv[6]))
 Users_supp = update_users_interact(sys.argv[3], Users_supp)
 
-Users_supp = get_supply_users(Users_supp, MissedUsers)
 Users = update_missed_users(Users, Users_supp, MissedUsers)
 
 active_user = 0
