@@ -29,7 +29,7 @@ def get_sim_items(file, ItemsSim):
         for line in f:
             item, sim_items = line.rstrip('\r\n').split(':')
             sim_items = sim_items.split(',')
-            sim_items = random.sample(sim_items, min(len(sim_items, 30)))
+            sim_items = random.sample(sim_items, min(len(sim_items),30))
             ItemsSim[item] = set(sim_items)
 
     return ItemsSim
@@ -133,7 +133,7 @@ ItemsPred_list = get_items_all(sys.argv[5])
 MissedUsers = get_missed_users('', MissedUsers)
 Users_supp = get_supply_users(Users_supp, MissedUsers)
 Users_supp = update_users_impression(sys.argv[2], Users_supp, int(sys.argv[6]))
-Users_supp = update_users_interact(sys.argv[3], Users_supp)
+Users_supp = update_users_interact(sys.argv[3], Users_supp, ItemsSim)
 
 Users = update_missed_users(Users, Users_supp, MissedUsers)
 
