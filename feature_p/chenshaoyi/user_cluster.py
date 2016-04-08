@@ -2,22 +2,35 @@
 #_*_coding:utf-8_*_
 
 import sys
+import time
+import datetime
 
-def get_has_impr_or_inter_users(impr_file, inter_file):
+# get week of the year according to unix stamp
+# python week begin with 0
+# so return week + 1 
+def get_week_year(label_time):
+	label_date = time.gmtime(label_time)
+	label_week = time.strftime("%W", label_date)
+	label_week = int(label_week)
+	return label_week + 1
+
+def get_has_impr_or_inter_users(impr_file, inter_file, endTime=45):
 	
 	knowned_users = set()
 	with open(impr_file, 'r') as fin:
 		fin.readline()
 		for line in fin:
 			segs = line.strip().split("\t")
-			if segs[0] not in knowned_users:
+			week = int(segs[2])
+			if segs[0] not in knowned_users and week <= endTime:
 				knowned_users.add(segs[0])
 	
 	with open(inter_file, 'r') as fin:
 		fin.readline()
 		for line in fin:
 			segs = line.strip().split("\t")
-			if segs[0] not in knowned_users:
+			week = get_week_year(float(segs[-1]))
+			if segs[0] not in knowned_users and week <= endTime:
 				knowned_users.add(segs[0])
 	
 	return knowned_users 
@@ -41,7 +54,7 @@ def load_target_users(file):
 	with open(file, 'r') as fin:
 		fin.readline()
 		for line in fin:
-			target_users.add(line.strip())
+			target_users.add(line.strip().split('\t')[0])
 
 	return target_users
 
@@ -128,10 +141,11 @@ if __name__ == '__main__':
 	user_file = "../../data/users.csv"
 	impr_file = "../../data/impressions.csv"
 	inter_file = "../../data/interactions.csv"
-	target_file = "../../data/target_users.csv"
+
+	#target_file = "../../data/target_users.csv"
 
 	target_users = load_target_users(target_file)
-	knowned_users = get_has_impr_or_inter_users(impr_file, inter_file)
+	knowned_users = get_has_impr_or_inter_users(impr_file, inter_file, 44)
 	feature2users, user2feature = load_user(user_file, knowned_users)
 	load_unknown_users(user_file, target_users, knowned_users, feature2users, user2feature)
 
