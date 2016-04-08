@@ -16,9 +16,42 @@ Authors: lvfuyu(@software.ict.ac.cn)
 Date:    2016/03/21 22:06:08
 File:    generate_test.py
 """
+
+import random
 import sys
 sys.path.append('../utils')
 from utils import *
+
+def get_sim_items(file, ItemsSim):
+
+    file = 'local/item_expand.csv'
+    with open(file, 'r') as f:
+        for line in f:
+            item, sim_items = line.rstrip('\r\n').split(':')
+            sim_items = sim_items.split(',')
+            sim_items = random.sample(sim_items, min(len(sim_items),30))
+            ItemsSim[item] = set(sim_items)
+
+    return ItemsSim
+
+def get_missed_users(file, MissedUsers):
+
+    file = 'online/similar_user.csv'
+    with open(file, 'r') as f:
+        for line in f:
+            user, sim_users = line.rstrip('\r\n').split(':')
+            sim_users = sim_users.split(',')
+            MissedUsers[user] = sim_users
+
+    return MissedUsers
+
+def get_supply_users(Users_supp, MissedUsers):
+
+    for missed_user, sim_users in MissedUsers.items():
+        for sim_u in sim_users:
+            Users_supp[sim_u] = set()
+
+    return Users_supp
 
 def get_target_users(file, Users):
     # store target users
@@ -56,7 +89,7 @@ def update_users_impression(file, Users, target_week):
     impression_file.close()
     return Users
 
-def update_users_interact(file, Users):
+def update_users_interact(file, Users, ItemsSim):
 
     train_interact_file = open(file, 'r')
     for line in train_interact_file:
@@ -66,18 +99,43 @@ def update_users_interact(file, Users):
         if user_id in Users:
             rec_item = Users[user_id]
             rec_item.add(item_id)
+            if item_id in ItemsSim:
+                rec_item = rec_item | ItemsSim[item_id]
+                
             Users[user_id] = rec_item
 
     train_interact_file.close()
     return Users
 
+def update_missed_users(Users, Users_supp, MissedUsers):
+    
+    for missed_user, sim_users in MissedUsers.items():
+        sim_users_items = Users[missed_user]
+        for sim_u in sim_users:
+            if sim_u in Users_supp:
+                sim_users_items = sim_users_items | Users_supp[sim_u]
+        Users[missed_user] = sim_users_items
+
+    return Users
+
 Users = {}
+Users_supp = {}
+MissedUsers = {}
+ItemsSim = {}
+
+ItemsSim = get_sim_items('', ItemsSim)
 Users = get_target_users(sys.argv[1], Users)
 Users = update_users_impression(sys.argv[2], Users, int(sys.argv[6]))
-Users = update_users_interact(sys.argv[3], Users)
-
+Users = update_users_interact(sys.argv[3], Users, ItemsSim)
 local_test_file = open(sys.argv[4],'w')
 ItemsPred_list = get_items_all(sys.argv[5])
+
+MissedUsers = get_missed_users('', MissedUsers)
+Users_supp = get_supply_users(Users_supp, MissedUsers)
+Users_supp = update_users_impression(sys.argv[2], Users_supp, int(sys.argv[6]))
+Users_supp = update_users_interact(sys.argv[3], Users_supp, ItemsSim)
+
+Users = update_missed_users(Users, Users_supp, MissedUsers)
 
 active_user = 0
 for user_id, item_list in Users.items():

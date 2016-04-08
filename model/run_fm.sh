@@ -5,10 +5,10 @@ root_dir=..
 if [ "$isOnline" == "0" ] ; then
 
 echo 'Offline Training...'
-
-./liblinear/train -s 0 -c 0.6 -w1 5 ${root_dir}/${local_feature}/local_train_features.p ./liblinear/lr.model
-./liblinear/predict -b 1 ${root_dir}/${local_feature}/local_test_features.p ./liblinear/lr.model ./liblinear/lr_pred.txt
-python ./liblinear/conver2pred.py ./liblinear/lr_pred.txt ./local/pred.txt
+./libFm -task c -train ${root_dir}/${local_feature}/local_train_features.p \
+				-test ${root_dir}/${local_feature}/local_test_features.p \
+				-out ./local/pred.txt
+				-dim 1,1,10 -iter 150 -init_stdev 0.02
 
 echo 'Evaluating...'
 # generate submit result
@@ -24,10 +24,11 @@ python score.py
 else
 
 echo 'Online Training...'
+./libFm -task c -train ${root_dir}/${online_feature}/online_train_features.p \
+                -test ${root_dir}/${online_feature}/online_test_features.p \
+                -out ./online/pred.txt
+                -dim 1,1,10 -iter 150 -init_stdev 0.02
 
-./liblinear/train -s 0 -c 0.6 -w1 5 ${root_dir}/${online_feature}/online_train_features.p ./liblinear/lr_online.model
-./liblinear/predict -b 1 ${root_dir}/${online_feature}/online_test_features.p ./liblinear/lr_online.model ./liblinear/lr_pred.txt
-python ./liblinear/conver2pred.py ./liblinear/lr_pred.txt ./online/pred.txt
 
 echo 'Evaluating...'
 # generate submit result
